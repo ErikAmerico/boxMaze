@@ -1,72 +1,3 @@
-// import React, { useState, useEffect } from 'react';
-// import ColorBoxFreeze from './ColorBoxFreeze';
-// import './ColorBoxGrid.css';
-
-
-
-// function ColorBoxGrid({ colors }) {
-//   const [colorBoxes, setColorBoxes] = useState([]);
-
-//   useEffect(() => {
-//     generateRandomColors();
-//   }, []);
-
-
-//   const generateRandomColors = () => {
-//     const randomColors = Array.from({ length: 25 }, () => ({
-//     color: getRandomColor(),
-//     isFrozen: false,
-//   }));
-//     setColorBoxes(randomColors);
-//  };
-
-//  const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
-
-
-//   const freezeBox = (index) => {
-//     setColorBoxes((prevBoxes) => {
-//       const updatedBoxes = [...prevBoxes];
-//       //updatedBoxes[index] = { ...prevBoxes[index], isFrozen: !prevBoxes[index].isFrozen };
-//       updatedBoxes[index].isFrozen = true;
-//       //generateRandomColors();
-//       return updatedBoxes;
-//     });
-
-//     randomizeUnfrozenBoxes();
-//   };
-
-//   const randomizeUnfrozenBoxes = () => {
-//     setColorBoxes((prevBoxes) => {
-//       const updatedBoxes = prevBoxes.map((box) => {
-//         if (!box.isFrozen) {
-//           return {
-//             ...box,
-//             color: getRandomColor()
-//           };
-//         }
-//         return box;
-//       });
-//       return updatedBoxes;
-//     });
-//   };
-
-//   return (
-//     <div className="ColorBoxGrid">
-//     {colorBoxes.map((box, index) => (
-//       <ColorBoxFreeze
-//         key={index}
-//         color={box.color}
-//         isFrozen={box.isFrozen}
-//         onFreezeToggle={() => freezeBox(index)}
-//       />
-//     ))}
-//   </div>
-//   );
-// }
-
-// export default ColorBoxGrid;
-
-
 import React, { useState, useEffect } from 'react';
 import ColorBoxFreeze from './ColorBoxFreeze';
 import './ColorBoxGrid.css';
@@ -92,34 +23,39 @@ function ColorBoxGrid({ colors }) {
     setColorBoxes((prevBoxes) => {
       const colorToFreeze = prevBoxes[index].color;
       const updatedBoxes = [...prevBoxes];
-      freezeConnected(index, colorToFreeze, updatedBoxes);
+      const visited = new Set();
+  
+      freezeConnected(index, colorToFreeze, updatedBoxes, visited);
+      randomizeUnfrozenBoxes(updatedBoxes);
+  
       return updatedBoxes;
     });
+};
 
-    randomizeUnfrozenBoxes();
-  };
-
-  const freezeConnected = (index, targetColor, boxes) => {
+const freezeConnected = (index, targetColor, boxes, visited) => {
     if (
       index < 0 ||
       index >= boxes.length ||
-      boxes[index].isFrozen ||
+      visited.has(index) ||
       boxes[index].color !== targetColor
     ) {
       return;
     }
-
+  
+    visited.add(index);
     boxes[index].isFrozen = true;
-
-    freezeConnected(index - 5, targetColor, boxes); // Up
-    freezeConnected(index + 5, targetColor, boxes); // Down
+  
+    freezeConnected(index - 5, targetColor, boxes, visited); // Up
+    freezeConnected(index + 5, targetColor, boxes, visited); // Down
     if (index % 5 !== 0) {
-      freezeConnected(index - 1, targetColor, boxes); // Left
+      freezeConnected(index - 1, targetColor, boxes, visited); // Left
     }
     if (index % 5 !== 4) {
-      freezeConnected(index + 1, targetColor, boxes); // Right
+      freezeConnected(index + 1, targetColor, boxes, visited); // Right
     }
   };
+  
+  
 
   const randomizeUnfrozenBoxes = () => {
     setColorBoxes((prevBoxes) => {
@@ -127,7 +63,7 @@ function ColorBoxGrid({ colors }) {
         if (!box.isFrozen) {
           return {
             ...box,
-            color: getRandomColor(), // Randomize color only for unfrozen boxes
+            color: getRandomColor(),
           };
         }
         return box;
@@ -141,9 +77,11 @@ function ColorBoxGrid({ colors }) {
       {colorBoxes.map((box, index) => (
         <ColorBoxFreeze
           key={index}
+          index={index}
           color={box.color}
           isFrozen={box.isFrozen}
-          onFreezeToggle={() => freezeAndRandomize(index)} // Freeze connected boxes
+          colorBoxes={colorBoxes}
+          onFreezeToggle={() => freezeAndRandomize(index)}
         />
       ))}
     </div>
@@ -151,5 +89,3 @@ function ColorBoxGrid({ colors }) {
 }
 
 export default ColorBoxGrid;
-
-
