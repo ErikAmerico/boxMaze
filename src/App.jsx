@@ -1,14 +1,16 @@
-import './App.css'
-import ColorBoxGrid from './ColorBoxGrid'
+import React from 'react';
+import ColorBoxGrid from './ColorBoxGrid';
+import RandomizeColorsButton from './RandomizeColorsButton';
+import './App.css';
 
-const colors = ['red', 'green', 'blue', 'teal', 'magenta', 'purple', 'pink', 'yellow', 'orange', 'brown', 'black', 'white'];
+const colors = ['red', 'green', 'blue', 'teal', 'magenta', 'purple', 'pink', 'yellow', 'orange', 'brown', 'gray', 'white'];
 
 function App() {
   return (
-  <div>
+    <div>
       <ColorBoxGrid colors={colors}/>
-  </div>
+    </div>
   );
-};
+}
 
 export default App;

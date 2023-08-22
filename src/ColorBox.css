@@ -2,3 +2,14 @@
     width: 20%;
     height: 20%;
 }
+
+.ColorBox.frozen {
+    /* Apply background gradient for border-like effect */
+    background-image: linear-gradient(black, black), linear-gradient(black, black), linear-gradient(black, black), linear-gradient(black, black), linear-gradient(black, black), linear-gradient(black, black);
+    background-size: 2px 100%, 100% 2px, 2px 100%, 100% 2px, 2px 100%, 100% 2px;
+    background-position: left top, left top, right top, left bottom, left bottom, left top;
+    background-repeat: no-repeat;
+    
+    /* Apply box-shadow to create the appearance of a border within the box */
+    box-shadow: inset 0 0 0 2px black;
+}
