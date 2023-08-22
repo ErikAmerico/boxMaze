@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ColorBoxFreeze from './ColorBoxFreeze';
-import RandomizeColorsButton from './RandomizeColorsButton';
 import './ColorBoxGrid.css';
 
 
@@ -32,6 +31,8 @@ function ColorBoxGrid({ colors }) {
       //generateRandomColors();
       return updatedBoxes;
     });
+
+    randomizeUnfrozenBoxes();
   };
 
   const randomizeUnfrozenBoxes = () => {
@@ -59,7 +60,7 @@ function ColorBoxGrid({ colors }) {
         onFreezeToggle={() => freezeBox(index)}
       />
     ))}
-    <RandomizeColorsButton onClick={randomizeUnfrozenBoxes} />
+    {/* <RandomizeColorsButton onClick={randomizeUnfrozenBoxes} /> */}
   </div>
   );
 }
