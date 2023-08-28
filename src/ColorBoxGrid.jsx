@@ -11,7 +11,7 @@ function ColorBoxGrid({ colors }) {
   }, []);
 
   // TODO: is this how you run checkForWin after the colorBoxes are modified???????? IDK
-  //useEffect(() => {
+  //useEffect(() => 
     //checkForWin(); // This is be executed when `loading` state changes
   //}, [colorBoxes])
 
