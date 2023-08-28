@@ -1,5 +1,4 @@
-import React from 'react';
-import './GameRules.css';
+import './gameRules.css';
 
 function GameRulesModal({ handleCloseRulesModal }) {
   return (
