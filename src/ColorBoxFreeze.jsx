@@ -3,10 +3,10 @@ import './ColorBoxFreeze.css';
 
 function ColorBoxFreeze({ color, isFrozen, onFreezeToggle, index, colorBoxes }) {
   const frozenNeighbors = [
-    [0, -1], // Top
-    [0, 1],  // Bottom
-    [-1, 0], // Left
-    [1, 0],  // Right
+    [0, -1], //top  
+    [0, 1],  //bottom
+    [-1, 0], //left
+    [1, 0], ///right
   ];
 
   const getBorderColor = (index) => {

@@ -10,6 +10,11 @@ function ColorBoxGrid({ colors }) {
     generateRandomColors();
   }, []);
 
+  // TODO: is this how you run checkForWin after the colorBoxes are modified???????? IDK
+  //useEffect(() => {
+    //checkForWin(); // This is be executed when `loading` state changes
+  //}, [colorBoxes])
+
   const areAllBoxesFrozen = () => {
     return colorBoxes.every(box => box.isFrozen);
   };
@@ -22,7 +27,11 @@ function ColorBoxGrid({ colors }) {
         }
     };
 
+    console.log("All boxes frozen: outside", areAllBoxesFrozen());
 
+
+// THIS RUNS BEFORE THE ABOVE LOG PROBABLY. THIS MAYBE 
+// RUNS BEFORE THE STATE CHANGE WHILE THE ABOVE LOG RUNS AFTER THE STATE CHANGE
 const checkForWin = () => {
     console.log("Checking for win...");
   console.log("All boxes frozen:", areAllBoxesFrozen());
@@ -107,7 +116,15 @@ const isConnected = (index1, index2) => {
 
   const freezeAndRandomize = (index) => {
     if (!colorBoxes[index].isFrozen) {
-    setColorBoxes((prevBoxes) => {
+
+    // RYAN: I THINK THIS IS AN ASYNC CALL WHICH MIGHT BE CAUSING PROBLEMS
+    // WITH STUFF THAT RUNS AFTER IT
+    // WE HAVE TO FIND A WAY TO MAKE THIS RUN BEFORE THE STUFF AFTER IT. 
+    // WE JUST CANT USE AWAIT BECAUSE THIS USES CALLBACKS INSTEAD OF PROMISES
+    setColorBoxes(
+      
+      (prevBoxes) => {
+      console.log('setColorboxes is being executed now!!!!!!')
       const colorToFreeze = prevBoxes[index].color;
       const updatedBoxes = [...prevBoxes];
       const visited = new Set();
@@ -116,12 +133,15 @@ const isConnected = (index1, index2) => {
       randomizeUnfrozenBoxes(updatedBoxes);
   
       return updatedBoxes;
-    });
+    }
+    
+    );
 
 
-  setMoveCount(moveCount + 1);
+    //setMoveCount(moveCount + 1);
 
-  checkForWin();
+    //console.log('im going to call checkForWin now $$$$$$$$$')
+    checkForWin();
   } else {
     alert("You can't freeze a frozen box!");
   }
