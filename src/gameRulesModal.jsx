@@ -22,3 +22,4 @@ export default GameRulesModal;
 //configured sit configuration build and deploy/continuous deployment
 //changed build command from npm run build to CI= npm run build
 //added environment variable CI to value false in netlify
+//trying again
