@@ -9,6 +9,7 @@ function GameRulesModal({ handleCloseRulesModal }) {
            You cannot click on a box that has already been clicked on. <br/>
            Adjoining unfrozen boxes will freeze on click. <br/>
            More additions to come! <br/>
+           (This box will close after 10 seconds)
         </p>
         {/* <button onClick={handleCloseRulesModal}>Close</button> */}
       </div>
