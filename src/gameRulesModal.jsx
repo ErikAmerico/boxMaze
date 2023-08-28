@@ -17,4 +17,5 @@ function GameRulesModal({ handleCloseRulesModal }) {
   );
 }
 
+
 export default GameRulesModal;
